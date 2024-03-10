@@ -30,26 +30,37 @@
       <!-- Contactos -->
       <input type="button" value="Volver" class="btnBack" />
       <div>
-        <label>Buscar en contactos:</label>
-        <input
-          type="text"
-          id="depositSearchContact"
-          placeholder="ingrese nombre"
-        />
-        <input type="button" value="Agregar nuevo Contacto" />
-        <h3>Contactos Guardados</h3>
-        <!-- Lista de Contactos -->
+        
+          <h3>Seleccionar Contacto</h3>
+          <!-- Lista de Contactos -->
+          <input type="button" id="btnAddContact" value="Agregar Nuevo Contacto">
+          <div id="divAddContact" style="display: none;">
+            <form id = formAddContact>
+              <label">Alias de la Cuenta</label>
+              <input type="text" placeholder="Juan Ferreteria" id="txtAddAlias">
+              <label>Nombre del Contacto</label>
+              <input type="text" id="txtAddName">
+              <label>N° de Cuenta</label>
+              <input type="text" id="txtAddAccount">
+              <input type="submit" value="Guardar Contacto">
+            </form>
+            <input type="button" value="Cerrar" id="btnCloseAdd">
+          </div>
+          <form id="formSentMoney">
+          <div id="divContactos"></div>
 
-        <div id="divContactos"></div>
-      </div>
-      <!-- Enviar Dinero -->
-      <div>
-        <h3>Envio de Dinero</h3>
-        <p>Datos del Contacto</p>
-        <form id="formSentMoney">
+          <h3>Mensaje</h3>
+          <textarea
+            id="txtTransferMessage"
+            cols="30"
+            rows="5"
+            style="resize: none"
+          ></textarea>
+          
+          <h3>Monto a Transferir</h3>
           <label>Indique Monto</label>
-          <input type="text" id="txtSentMoney" placeholder="Monto" />
           <label id="lblAvailable"></label>
+          <input type="text" id="txtSentMoney" />
           <input type="submit" value="Enviar Dinero" />
         </form>
       </div>
