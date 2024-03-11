@@ -10,6 +10,10 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
     <!-- CSS -->
     <link rel="stylesheet" href="../css/style.css" />
     <!-- FAVICON -->
@@ -20,52 +24,96 @@
     />
     <title>AlkeWallet</title>
   </head>
-  <body>
-    <header>
+  <body class="bg-body-tertiary">
+    <header class="container text-center">
       <img src="../assets/img/logo.png" alt="AlkeWallet Logo" />
-      <h1>AlkeWallet</h1>
+      <h1 class="h1">AlkeWallet</h1>
     </header>
     <main>
-      <h2>Enviar Dinero</h2>
-      <!-- Contactos -->
-      <input type="button" value="Volver" class="btnBack" />
-      <div>
-        
-          <h3>Seleccionar Contacto</h3>
+      <div class="container text-center mt-5 glassContainer">
+        <div class="d-flex align-items-start justify-content-start pt-3">
+          <button class="btnBack">
+            <span class="material-symbols-outlined"> arrow_back </span>
+          </button>
+        </div>
+        <h2 class="h2 mb-5">Enviar Dinero</h2>
+        <!-- Contactos -->
+        <div>
+          <h3 class="h3 mb-3 text-start">Seleccionar Contacto</h3>
           <!-- Lista de Contactos -->
-          <input type="button" id="btnAddContact" value="Agregar Nuevo Contacto">
-          <div id="divAddContact" style="display: none;">
-            <form id = formAddContact>
-              <label">Alias de la Cuenta</label>
-              <input type="text" placeholder="Juan Ferreteria" id="txtAddAlias">
-              <label>Nombre del Contacto</label>
-              <input type="text" id="txtAddName">
-              <label>N° de Cuenta</label>
-              <input type="text" id="txtAddAccount">
-              <input type="submit" value="Guardar Contacto">
+
+          <div id="divAddContact" style="display: none">
+            <form id="formAddContact">
+              <div class="form-floating mb-3">
+                <input type="text" id="txtAddAlias" class="form-control" />
+                <label for="txtAddAlias">Alias de la Cuenta</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" id="txtAddName" class="form-control" />
+                <label for="txtAddName">Nombre del Contacto</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="number" id="txtAddAccount" class="form-control" />
+                <label for="txtAddAccount">N° de Cuenta</label>
+              </div>
+              <div class="d-grid gap-2 mb-3">
+                <input
+                  type="submit"
+                  value="Guardar Contacto"
+                  class="btn btn-primary btn-lg"
+                />
+              </div>
             </form>
-            <input type="button" value="Cerrar" id="btnCloseAdd">
           </div>
           <form id="formSentMoney">
-          <div id="divContactos"></div>
-
-          <h3>Mensaje</h3>
-          <textarea
-            id="txtTransferMessage"
-            cols="30"
-            rows="5"
-            style="resize: none"
-          ></textarea>
-          
-          <h3>Monto a Transferir</h3>
-          <label>Indique Monto</label>
-          <label id="lblAvailable"></label>
-          <input type="text" id="txtSentMoney" />
-          <input type="submit" value="Enviar Dinero" />
-        </form>
+            <div id="divContactos" class="mb-3"></div>
+            <input
+              type="button"
+              id="btnAddContact"
+              value="Agregar Nuevo Contacto"
+              class="btn btn-success mb-3"
+            />
+            <div class="form-floating mb-3">
+              <textarea
+                id="txtTransferMessage"
+                cols="30"
+                rows="5"
+                style="resize: none"
+                class="form-control"
+              ></textarea>
+              <label for="txtTransferMessage">Asunto</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                id="txtSentMoney"
+                class="form-control"
+                aria-describedby="lblAvailable"
+              />
+              <label for="txtSentMoney">Ingrese Monto</label>
+              <div id="lblAvailable" class="form-text text-start"></div>
+            </div>
+            <div
+              class="alert"
+              style="display: none"
+              id="alertTransferencia"
+            ></div>
+            <div class="d-grid gap-2 mb-5">
+              <input
+                type="submit"
+                value="Enviar Dinero"
+                class="btn btn-primary btn-lg"
+              />
+            </div>
+          </form>
+        </div>
       </div>
     </main>
-    <footer></footer>
+    <footer class="mt-5">
+      <div class="text-center mt-5">
+        <span class="small">Actividad Integradora Modulo 2 - Pablo Leiva</span>
+      </div>
+    </footer>
     <!-- Scripts Bootcamp -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

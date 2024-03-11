@@ -47,7 +47,7 @@ const transactions = [
 const contacts = [
   { nombre: 'Armando Casas', cuenta: 123456, alias: 'Armando' },
   { nombre: 'Freddy Turbina', cuenta: 234567, alias: 'Freddy' },
-  { nombre: 'Lin Kuei', cuenta: 345678, alias: 'Mall Chino' },
+  { nombre: 'Lin Kuei SpA', cuenta: 345678, alias: 'Mall Chino' },
   { nombre: 'DeliBurger', cuenta: 456789, alias: 'Hamburguesas' },
   { nombre: 'Centro Cultural la Moneda', cuenta: 567890, alias: 'CCLM' },
 ];
@@ -55,6 +55,9 @@ const contacts = [
 const user = $('#loginUser');
 const pass = $('#loginPassword');
 const formulario = $('#loginForm');
+const alerta = $('#alertLogin');
+const helpUser = $('#userMessage');
+const helpPassword = $('#pwdMessage');
 
 formulario.on('submit', (event) => {
   event.preventDefault();
@@ -63,10 +66,13 @@ formulario.on('submit', (event) => {
 
 function login() {
   if (user.val() === demoUser.username && pass.val() === demoUser.password) {
+    loginExitoso();
     inicializarData();
-    $(location).attr('href', 'html/menu.html');
+    setTimeout(() => {
+      $(location).attr('href', 'html/menu.html');
+    }, 1000);
   } else {
-    alert('Credenciales Erroneas');
+    loginFallido('Credenciales Erroneas');
   }
 }
 
@@ -74,4 +80,18 @@ function inicializarData() {
   localStorage.setItem('user', JSON.stringify(demoUser));
   localStorage.setItem('transactions', JSON.stringify(transactions));
   localStorage.setItem('contacts', JSON.stringify(contacts));
+}
+
+function loginExitoso() {
+  alerta.removeClass('alert-danger');
+  alerta.addClass('alert-success');
+  alerta.show();
+  alerta.html('Login Exitoso, Redirigiendo....');
+}
+
+function loginFallido(message) {
+  alerta.removeClass('alert-success');
+  alerta.addClass('alert-danger');
+  alerta.show();
+  alerta.html(message);
 }

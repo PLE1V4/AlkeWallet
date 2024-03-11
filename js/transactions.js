@@ -12,7 +12,7 @@ $(document).ready(function () {
 
 function cargarUltimosMovimientos() {
   let tbody =
-    '<table><thead><th>Monto</th><th>Descripcion</th><th>Destinatario</th><th>Tipo de Movimiento</th></thead><tbody>';
+    '<table class="table table-responsive table-hover table-sm table-borderless-column"><thead><th>Monto</th><th>Descripcion</th><th>Destinatario</th><th>Tipo de Movimiento</th></thead><tbody>';
   for (let i = transactions.length - 1; i >= 0; i--) {
     tbody += `<tr><td>${transactions[i].amount}</td><td>${
       transactions[i].desc

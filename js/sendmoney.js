@@ -5,7 +5,6 @@ let transactions = JSON.parse(localStorage.getItem('transactions'));
 const lblSaldo = $('#lblAvailable');
 const btnBack = $('.btnBack');
 const btnAddContact = $('#btnAddContact');
-const btnCerrarAdd = $('#btnCloseAdd');
 const formSent = $('#formSentMoney');
 const formAdd = $('#formAddContact');
 const cantidad = $('#txtSentMoney');
@@ -15,6 +14,7 @@ const divAgregarContacto = $('#divAddContact');
 const nombreContacto = $('#txtAddName');
 const cuentaContacto = $('#txtAddAccount');
 const aliasContacto = $('#txtAddAlias');
+const alerta = $('#alertTransferencia');
 
 btnBack.on('click', function () {
   $(location).attr('href', 'menu.html');
@@ -31,11 +31,13 @@ formAdd.on('submit', function (event) {
 });
 
 btnAddContact.on('click', function () {
-  divAgregarContacto.show();
-});
-
-btnCerrarAdd.on('click', function () {
-  divAgregarContacto.hide();
+  if (divAgregarContacto.css('display') == 'none') {
+    divAgregarContacto.show();
+    btnAddContact.val('Cerrar');
+  } else {
+    divAgregarContacto.hide();
+    btnAddContact.val('Agregar Nuevo Contacto');
+  }
 });
 
 $(document).ready(function () {
@@ -50,32 +52,47 @@ function setAvisoSaldo(element, saldo) {
 function sentMoney() {
   const num = parseInt(cantidad.val());
 
-  if (!isNaN(num) && num > 0 && num <= user.balance) {
+  if (
+    !isNaN(num) &&
+    num > 0 &&
+    num <= user.balance &&
+    $("input[name='radContacts']:checked").val()
+  ) {
     registrarTransferencia(num);
+    transferenciaExitosa();
   } else if (!isNaN(num) && num === 0) {
-    alert('El monto a Transferir no puede ser 0');
+    TransferenciaFallida('El monto a Transferir no puede ser 0');
   } else if (!isNaN(num) && num > 0 && num > user.balance) {
-    alert('el monto a transferir no puede execeder al monto en su cuenta');
+    TransferenciaFallida(
+      'El monto a transferir no puede execeder al monto en su cuenta'
+    );
+  } else if (!$("input[name='radContacts']:checked").val()) {
+    TransferenciaFallida('Debe seleccionar un Contacto');
   } else {
-    alert('datos no validos');
+    TransferenciaFallida('datos no validos');
   }
 }
 
 function cargarContactos() {
   let body = '';
   if (contacts) {
+    body =
+      '<table id="tableContacts" class="table table-responsive table-hover table-sm table-borderless-column"><theader><th></th><th>Alias</th><th>Nombre</th><th>Numero de Cuenta</th></theader><tbody>';
     contacts.forEach((element) => {
       body +=
-        '<input type="radio" name="radContacts" value="' +
+        '<tr><td><input type="radio" name="radContacts" value="' +
         element.nombre +
         '" id="' +
         element.cuenta +
-        '"><label>' +
-        element.cuenta +
-        '</label><label>' +
+        '"></td><td><label>' +
         element.alias +
-        '</label>';
+        '</label></td><td><label>' +
+        element.nombre +
+        '</label></td><td><label>' +
+        element.cuenta +
+        '</label></td></tr>';
     });
+    body += '</tbody></table>';
   } else {
     body = '<span>No hay Contactos Registrados</span>';
   }
@@ -105,4 +122,19 @@ function agregarContacto() {
   cargarContactos();
   $(`#${cuentaContacto.val()}`).prop('checked', true);
   localStorage.setItem('contacts', JSON.stringify(contacts));
+  divAgregarContacto.hide();
+}
+
+function transferenciaExitosa() {
+  alerta.removeClass('alert-danger');
+  alerta.addClass('alert-success');
+  alerta.show();
+  alerta.html('Transferencia realizada Exitosamente');
+}
+
+function TransferenciaFallida(message) {
+  alerta.removeClass('alert-success');
+  alerta.addClass('alert-danger');
+  alerta.show();
+  alerta.html(message);
 }
