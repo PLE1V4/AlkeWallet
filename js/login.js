@@ -61,18 +61,37 @@ const helpPassword = $('#pwdMessage');
 
 formulario.on('submit', (event) => {
   event.preventDefault();
+  user.removeClass('is-invalid');
+  pass.removeClass('is-invalid');
   login();
 });
 
 function login() {
-  if (user.val() === demoUser.username && pass.val() === demoUser.password) {
-    loginExitoso();
-    inicializarData();
-    setTimeout(() => {
-      $(location).attr('href', 'html/menu.html');
-    }, 1000);
+  if (user.val() && pass.val()) {
+    if (user.val() === demoUser.username && pass.val() === demoUser.password) {
+      loginExitoso();
+      inicializarData();
+      setTimeout(() => {
+        $(location).attr('href', 'html/menu.html');
+      }, 1000);
+    } else {
+      if (
+        user.val() !== demoUser.username ||
+        pass.val() !== demoUser.password
+      ) {
+        loginFallido('Credenciales Erroneas');
+      }
+    }
   } else {
-    loginFallido('Credenciales Erroneas');
+    if (!user.val()) {
+      user.addClass('is-invalid');
+      helpUser.html('Debe ingreser un nombre de Usuario');
+    }
+
+    if (!pass.val()) {
+      pass.addClass('is-invalid');
+      helpPassword.html('Debe Ingrear una contraseña');
+    }
   }
 }
 
