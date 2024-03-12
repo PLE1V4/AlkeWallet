@@ -6,6 +6,7 @@ const back = $('.btnBack');
 const deposit = $('#formDeposit');
 const cantidad = $('#txtAmount');
 const alerta = $('#alertDeposito');
+const helper = $('#amountHelper');
 
 back.on('click', function () {
   $(location).attr('href', 'menu.html');
@@ -13,6 +14,8 @@ back.on('click', function () {
 
 deposit.on('submit', function (event) {
   event.preventDefault();
+  cantidad.removeClass('is-valid');
+  cantidad.removeClass('is-invalid');
   agregarSaldo();
 });
 
@@ -25,14 +28,21 @@ function setAvisoSaldo(element, saldo) {
 }
 
 function agregarSaldo() {
-  num = parseInt(cantidad.val());
-  if (!isNaN(num) && num > 0) {
-    registrarDeposito(num);
-    depositoExitoso();
-  } else if (!isNaN(num) && num === 0) {
-    errorDeposito('El Monto tiene que ser mayor a 0');
+  if (cantidad.val()) {
+    num = parseInt(cantidad.val());
+    if (!isNaN(num) && num > 0) {
+      cantidad.addClass('is-valid');
+      registrarDeposito(num);
+      depositoExitoso();
+    } else if (!isNaN(num) && num === 0) {
+      cantidad.addClass('is-invalid');
+      helper.html('El Monto no puede ser 0');
+    } else {
+      errorDeposito('Ocurrio un error, intente nuevamente');
+    }
   } else {
-    errorDeposito('Datos no válidos');
+    cantidad.addClass('is-invalid');
+    helper.html('Debe ingresar un número');
   }
 }
 
