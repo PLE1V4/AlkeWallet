@@ -61,15 +61,19 @@ function sentMoney() {
     registrarTransferencia(num);
     transferenciaExitosa();
   } else if (!isNaN(num) && num === 0) {
-    TransferenciaFallida('El monto a Transferir no puede ser 0');
+    transferenciaFallida('El monto a Transferir no puede ser 0');
   } else if (!isNaN(num) && num > 0 && num > user.balance) {
-    TransferenciaFallida(
+    transferenciaFallida(
       'El monto a transferir no puede execeder al monto en su cuenta'
     );
-  } else if (!$("input[name='radContacts']:checked").val()) {
-    TransferenciaFallida('Debe seleccionar un Contacto');
+  } else if (!$("input[name='radContacts']:checked")) {
+    transferenciaFallida('Debe seleccionar un Contacto');
+  } else if (!mensaje.val()) {
+    transferenciaFallida('Debe ingresar un mensaje');
+  } else if (!cantidad.val()) {
+    transferenciaFallida('Debe Ingresar un monto');
   } else {
-    TransferenciaFallida('datos no validos');
+    transferenciaFallida('Ocurrio un error, intente nuevamente');
   }
 }
 
@@ -132,7 +136,7 @@ function transferenciaExitosa() {
   alerta.html('Transferencia realizada Exitosamente');
 }
 
-function TransferenciaFallida(message) {
+function transferenciaFallida(message) {
   alerta.removeClass('alert-success');
   alerta.addClass('alert-danger');
   alerta.show();
