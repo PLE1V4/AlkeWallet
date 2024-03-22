@@ -22,8 +22,6 @@ function cargarUltimosMovimientos() {
   }
   tbody += '</tbody></table>';
   ultimosMovimientos.html(tbody);
-  console.log(tbody);
-  console.log(transactions.length);
 }
 
 function setTipo(val) {
